@@ -23,6 +23,26 @@ const App = () => {
     }),
   });
 
+  // BEGIN 打赏按钮
+  const buttonStyle = {
+    position: 'fixed',
+    right: '20px',
+    bottom: '20px',
+    zIndex: 1000,
+    backgroundColor: '#ff4081',
+    color: 'white',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '16px',
+  };
+
+  const handleDonateClick = () => {
+    window.open('https://52ai.icu/imgs/donate.jpg', '_blank');
+  };
+  // 打赏按钮 END
+
   return (
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
@@ -36,6 +56,9 @@ const App = () => {
                 <RadixToast.Viewport className="pointer-events-none fixed inset-0 z-[1000] mx-auto my-2 flex max-w-[560px] flex-col items-stretch justify-start md:pb-5" />
               </DndProvider>
             </ToastProvider>
+            <button style={buttonStyle} onClick={handleDonateClick}>
+              打赏
+            </button>
           </RadixToast.Provider>
         </ThemeProvider>
       </RecoilRoot>
