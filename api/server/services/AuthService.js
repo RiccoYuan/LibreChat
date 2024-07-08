@@ -16,6 +16,7 @@ const isDomainAllowed = require('./isDomainAllowed');
 const Token = require('~/models/schema/tokenSchema');
 const Session = require('~/models/Session');
 const { logger } = require('~/config');
+const { Transaction } = require('~/models/Transaction');
 
 const domains = {
   client: process.env.DOMAIN_CLIENT,
@@ -111,6 +112,25 @@ const verifyEmail = async (req) => {
   if (!updatedUser) {
     logger.warn(`[verifyEmail] [User not found] [Email: ${email}]`);
     return new Error('User not found');
+  }
+
+  let result;
+  try {
+    result = await Transaction.create({
+      user: emailVerificationData.userId,
+      tokenType: 'credits',
+      context: 'Register to get balance',
+      rawAmount: process.env.SET_BALANCE_AFTER_REGISTRATION || 10000,
+    });
+  } catch (error) {
+    console.red('Error: [Failed to register to get balance] ' + error.message);
+    console.error(error);
+  }
+
+  // Check the result
+  if (!result?.balance) {
+    console.red('Error: Something went wrong while updating the balance after user verify email!');
+    console.error(result);
   }
 
   await emailVerificationData.deleteOne();

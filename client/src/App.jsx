@@ -26,16 +26,16 @@ const App = () => {
   // BEGIN 打赏按钮
   const buttonStyle = {
     position: 'fixed',
-    right: '20px',
-    bottom: '20px',
-    zIndex: 1000,
+    right: '-3px',
+    bottom: '80px',
+    zIndex: 9999,
     backgroundColor: '#ff4081',
     color: 'white',
     border: 'none',
-    padding: '10px 20px',
+    padding: '5px 10px',
     borderRadius: '5px',
     cursor: 'pointer',
-    fontSize: '16px',
+    fontSize: '14px',
   };
 
   const handleDonateClick = () => {
